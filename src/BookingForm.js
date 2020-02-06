@@ -1,15 +1,13 @@
 import 'date-fns';
-import React from 'react';
+import React, {useState} from 'react';
 import { Grid, TextField, Button, Card, CardContent, Typography } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import Guests from './Guests';
 
-
 function BookingForm() {
 
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-
   const handleDateChange = date => {
     setSelectedDate(date);
   };
@@ -19,7 +17,7 @@ function BookingForm() {
       <CardContent>
         <Grid container >
           <Grid item xs={12} style={{ padding: 15 }}>
-            <Typography variant='h3'>
+            <Typography variant='h4' style={{fontWeight : 700}}>
               Book unique places to stay and things to do.
             </Typography>
             <Typography variant='subtitle1'>
@@ -35,7 +33,7 @@ function BookingForm() {
                   format="MM/dd/yyyy"
                   margin="normal"
                   id="date-picker-inline"
-                  label="CHECK IN"
+                  label="CHECK-IN"
                   value={selectedDate}
                   onChange={handleDateChange}
                   KeyboardButtonProps={{
