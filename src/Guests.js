@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import { Grid, Button, Menu, MenuItem, Typography, IconButton, TextField } from '@material-ui/core';
+import { Grid, Button, Menu, MenuItem, Typography, IconButton, TextField, makeStyles } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 
 function Guests() {
 
+
+  const styles = makeStyles ({
+    popoverPaper: {
+      width: '100%',
+      height: '100%',
+      maxHeight: 'unset',
+      maxWidth: 'unset',
+    },
+  });
 
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = event => {
@@ -30,15 +38,17 @@ function Guests() {
 
   return (
     <div>
-      <Autocomplete
-        id="combo-box-demo"
-        options={}
-        getOptionLabel={option => option.title}
-        style={{ width: 300 }}
-        renderInput={params => (
-          <TextField {...params} label="Combo box" variant="outlined" fullWidth />
-        )}
-      />
+    <div onClick={(e) => {
+      setClicked(!clicked);
+      handleClick(e);
+    }} style={{border : '0.5px solid rgba(0, 0, 0, 0.39)', borderRadius : 4, MaxWidth : '100%', display : 'flex', padding : '14px'}}>
+    <div style={{flexGrow : 1}}>
+      <Typography style={{color : 'rgba(0, 0, 0, 0.39)'}}>
+       Guests
+      </Typography>
+    </div>
+        {clicked ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      </div>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -47,25 +57,27 @@ function Guests() {
         onClose={handleClose}
       >
         {guests.map((x, i) => (
-          <Grid key={i} container>
-            <Grid item style={{ display: 'flex' }}>
-              <div style={{ flexGrow: 1 }}>
-                <Typography variant='subtitle2'>
-                  {x}
-                </Typography>
-                <Typography variant='subtitle2'>
-                  {guestsSubs[i]}
-                </Typography>
-              </div>
-              <div style={{ display: 'flex' }}>
-                <RemoveCircleOutlineIcon />
-                <Typography variant='body2' style={{ padding: '0px 10px' }}>
-                  {`${numGuests}+`}
-                </Typography>
-                <AddCircleOutlineIcon />
-              </div>
+          <MenuItem key={i}>
+            <Grid container>
+              <Grid item xs={12} style={{ display: 'flex' }}>
+                <div style={{ flexGrow: 1 }}>
+                  <Typography variant='subtitle2'>
+                    {x}
+                  </Typography>
+                  <Typography variant='subtitle2'>
+                    {guestsSubs[i]}
+                  </Typography>
+                </div>
+                <div style={{ display: 'flex' }}>
+                  <RemoveCircleOutlineIcon />
+                  <Typography variant='body2' style={{ padding: '0px 10px' }}>
+                    {`${numGuests}+`}
+                  </Typography>
+                  <AddCircleOutlineIcon />
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
+          </MenuItem>
         ))}
       </Menu>
     </div>
