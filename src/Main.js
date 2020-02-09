@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Grid, Dialog } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import img from './back.jpg'
 import Navbar from './Navbar';
 import BookingForm from './BookingForm';
@@ -29,7 +29,7 @@ function Main() {
       </Grid>
       <Grid item xs={12}>
         <Grid container>
-          <Grid item xs={12} style={{ paddingTop: 10, marginLeft: 100, marginTop: 50 }}>
+          <Grid item xs={12} style={{ paddingTop: 10, marginLeft: 100, marginTop: 30 }}>
             <BookingForm />
           </Grid>
         </Grid>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Typography, IconButton, Card } from '@material-ui/core';
+import { Typography, IconButton, Card, ClickAwayListener } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
-function Options({ showOptions, textHandle, addNum, removeNum }) {
+function Options({ showOptions, textHandle, addNum, removeNum, clickedAway }) {
+
 
   const [guests, setGuests] = useState(
     {
@@ -27,6 +28,11 @@ function Options({ showOptions, textHandle, addNum, removeNum }) {
 
 
   return (
+    <ClickAwayListener onClickAway={(e)=>{
+      console.log(e);
+      e.preventDefault()
+      clickedAway();
+    }}>
     <Card style={{ padding: '5px 15px', width: '19%', position: 'absolute', display: showOptions ? '' : 'none', zIndex: 10, boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)' }}>
       {objKeys.map((x, i) => (
         <div key={i} style={{ display: 'flex', margin: '15px 0px' }}>
@@ -74,80 +80,8 @@ function Options({ showOptions, textHandle, addNum, removeNum }) {
         </Typography>
       </div>
     </Card>
+    </ClickAwayListener>
   )
 }
 
 export default Options;
-
-// let [numGuestAdult, setNumGuestAdult] = useState(0);
-//   let [numGuestChil, setNumGuestChil] = useState(0);
-//   let [numGuestIn, setNumGuestIn] = useState(0);
-
-// <div style={{ display: 'flex', margin : '15px 0px' }}>
-//         <div style={{ flexGrow: 1, alignItems: 'center', display: 'flex' }}>
-//           <Typography variant='h6'>
-//             Adults
-//               </Typography>
-//         </div>
-//         <div style={{ display: 'flex', alignItems: 'center' }}>
-//           <IconButton style={{padding : '10px 0px'}} disabled={numGuestAdult === 0 ? true : false} onClick={() => {
-//             setNumGuestAdult(numGuestAdult -= 1)
-//           }}>
-//             <RemoveCircleOutlineIcon style={{color: numGuestAdult === 0 ? '' : 'green'}} />
-//           </IconButton>
-//           <Typography variant='body2' style={{ padding: '0px 10px' }}>
-//             {`${numGuestAdult}+`}
-//           </Typography>
-//           <AddCircleOutlineIcon style={{color: 'green'}} onClick={() => {
-//             setNumGuestAdult(numGuestAdult += 1)
-//           }} />
-//         </div>
-//        </div>
-//       <div style={{ display: 'flex', margin : '15px 0px' }}>
-//         <div style={{ flexGrow: 1, alignItems: 'center' }}>
-//           <Typography variant='h6'>
-//             Children
-//               </Typography>
-//           <Typography variant='subtitle2'>
-//             Ages 2-12
-//               </Typography>
-//         </div>
-//         <div style={{ display: 'flex', alignItems: 'center' }}>
-//           <IconButton style={{padding : '10px 0px'}} disabled={numGuestChil === 0 ? true : false} onClick={() => {
-//             setNumGuestChil(numGuestChil -= 1)
-//           }}>
-//             <RemoveCircleOutlineIcon style={{color: numGuestChil === 0 ? '' : 'green'}} />
-//           </IconButton>
-//           <Typography variant='body2' style={{ padding: '0px 10px' }}>
-//             {`${numGuestChil}+`}
-//           </Typography>
-//           <AddCircleOutlineIcon 
-//           style={{color: 'green'}}
-//           onClick={() => {
-//             setNumGuestChil(numGuestChil += 1)
-//           }} />
-//         </div>
-//       </div>
-//       <div style={{ display: 'flex', margin : '10px 0px' }}>
-//         <div style={{ flexGrow: 1 }}>
-//           <Typography variant='h6'>
-//             Infants
-//               </Typography>
-//           <Typography variant='subtitle2'>
-//             Under 2
-//           </Typography>
-//         </div>
-//         <div style={{ display: 'flex', alignItems: 'center' }}>
-//           <IconButton style={{padding : '10px 0px'}} disabled={numGuestIn === 0 ? true : false} onClick={() => {
-//             setNumGuestIn(numGuestIn--)
-//           }}>
-//             <RemoveCircleOutlineIcon style={{color: numGuestIn === 0 ? '' : 'green'}} />
-//           </IconButton>
-//           <Typography variant='body2' style={{ padding: '0px 10px' }}>
-//             {`${numGuestIn}+`}
-//           </Typography>
-//             <AddCircleOutlineIcon style={{color: 'green'}} onClick={() => {
-//               setNumGuestIn(numGuestIn++)
-//             }} />
-//         </div>
-//       </div>

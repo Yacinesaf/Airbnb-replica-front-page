@@ -1,33 +1,29 @@
 import React from 'react'
-import { Dialog, Typography, Grid, IconButton, Slide, DialogContent, Divider, List, ListItem, DialogTitle, ListItemText } from '@material-ui/core'
+import { Dialog, Typography, Grid, IconButton, DialogContent, Divider, List, ListItem, ListItemText, Toolbar } from '@material-ui/core'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import img from './logoRed.png'
 import LanguageIcon from '@material-ui/icons/Language';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 
 
-function DialogDrop({ open, close, isOpen }) {
+function DialogDrop({close, isOpen }) {
 
   let list = ['Downlaod the App', 'Invite friends', 'Refer hosts', 'Airbnb for Work']
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="down" ref={ref} {...props} />;
-  });
 
   return (
-    <div>
-      <Dialog fullScreen onClose={close} open={isOpen} TransitionComponent={Transition}>
-        <DialogTitle style={{ display: 'flex', padding: '25px 39px 0px', alignItems: 'center' }}>
-          <div onClick={close}>
+      <Dialog fullScreen onClose={close} open={isOpen}>
+        <Toolbar style={{padding: '10px 39px' }}>
+          <div style={{ display : 'flex' }} onClick={close}>
             <img alt='yes' src={img} style={{ height: 35, width: 35 }} />
             <IconButton>
-              <ExpandLessIcon />
+              <ExpandLessIcon fontSize='small' />
             </IconButton>
           </div>
-        </DialogTitle>
+        </Toolbar>
         <DialogContent>
           <Grid container>
             <Grid item xs={12} style={{ padding: 15 }}>
-              <Typography variant='body1' style={{ paddingTop: 30 }}>
+              <Typography variant='body1'>
                 Home
               </Typography>
               <Divider style={{ marginTop: 20 }} />
@@ -101,7 +97,6 @@ function DialogDrop({ open, close, isOpen }) {
           </Grid>
         </DialogContent>
       </Dialog>
-    </div >
 
   )
 

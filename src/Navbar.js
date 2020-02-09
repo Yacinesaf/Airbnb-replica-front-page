@@ -9,9 +9,9 @@ function Navbar({open}) {
     <div >
       <Toolbar style={{ padding: '10px 25px' }}>
         <div style={{ flexGrow: 1, display : 'flex' }}>
-          <img alt='yes' src={img} style={{ height: 40, width: 40 }} />
-          <IconButton onClick={open} style ={{paddingLeft : 5}}>
-            <ExpandMoreIcon fontSize='large' style={{ color: 'white' }} />
+          <img alt='yes' src={img} style={{ height: 35, width: 35 }} />
+          <IconButton onClick={open}>
+            <ExpandMoreIcon fontSize='small' style={{ color: 'white' }} />
           </IconButton>
         </div>
         <Button size='large' style={{ color: 'white', textTransform: 'none' }} >

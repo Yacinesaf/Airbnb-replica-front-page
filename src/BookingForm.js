@@ -13,11 +13,13 @@ function BookingForm() {
   const [text, setText] = useState('Guests');
   const [clicked, setClicked] = useState(false);
   let [numGuests, setNumGuests] =useState(null);
+
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [selectedDate1, setSelectedDate1] = React.useState(new Date());
   const handleDateChange = date => {
     setSelectedDate(date);
   };
+
+  const [selectedDate1, setSelectedDate1] = React.useState(new Date());
   const handleDateChange1 = date => {
     setSelectedDate1(date);
   };
@@ -36,6 +38,10 @@ function BookingForm() {
   };
   const removeNumGuests = () => {
     setNumGuests(numGuests-=1)
+  };
+  const notClicked = () => {
+    console.log(clicked)
+    if(clicked) setClicked(false);
   };
 
   return (
@@ -59,7 +65,7 @@ function BookingForm() {
                     variant="inline"
                     format="MM/dd/yyyy"
                     margin="normal"
-                    id="date-picker-inline"
+                    id="date-picker"
                     label="CHECK-IN"
                     value={selectedDate1}
                     onChange={handleDateChange1}
@@ -93,7 +99,7 @@ function BookingForm() {
                 </div>
                 {clicked ? <ExpandLessIcon /> : <ExpandMoreIcon />}
               </div>
-              <Options showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
+              <Options clickedAway={notClicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
             </Grid>
             <Grid item xs={12} style={{paddingTop : 15}}>
               <Button size='large' variant='contained' 
