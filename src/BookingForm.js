@@ -7,11 +7,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Options from './Options';
 
-function BookingForm() {
+function BookingForm({clicked, clickEvent, clickedAway}) {
 
 
   const [text, setText] = useState('Guests');
-  const [clicked, setClicked] = useState(false);
   let [numGuests, setNumGuests] =useState(null);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date());
@@ -38,9 +37,6 @@ function BookingForm() {
   };
   const removeNumGuests = () => {
     setNumGuests(numGuests-=1)
-  };
-  const notClicked = () => {
-    if(clicked) setClicked(false);
   };
 
   return (
@@ -88,17 +84,15 @@ function BookingForm() {
                     }} />
                 </MuiPickersUtilsProvider>
               </div>
-              <div onClick={() => {
-                setClicked(!clicked);
-              }} style={{ border: '0.5px solid rgba(0, 0, 0, 0.39)', borderRadius: 4, MaxWidth: '100%', display: 'flex', padding: '15px' }}>
+              <div id='guests' onClick={clickEvent} style={{ border: '0.5px solid rgba(0, 0, 0, 0.39)', borderRadius: 4, MaxWidth: '100%', display: 'flex', padding: '15px' }}>
                 <div style={{ flexGrow: 1 }}>
-                  <Typography style={{ color: 'rgba(0, 0, 0, 0.39)' }}>
+                  <Typography id='typo' style={{ color: 'rgba(0, 0, 0, 0.39)' }}>
                     {text}
                 </Typography>
                 </div>
-                {clicked ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                {clicked ? <ExpandLessIcon id='less' /> : <ExpandMoreIcon id='more' />}
               </div>
-              <Options clickedAway={notClicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
+              <Options clickedAway={clickedAway} clicked={clicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
             </Grid>
             <Grid item xs={12} style={{paddingTop : 15}}>
               <Button size='large' variant='contained' 

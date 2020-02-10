@@ -3,7 +3,7 @@ import { Typography, IconButton, Card, ClickAwayListener } from '@material-ui/co
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
-function Options({ showOptions, textHandle, addNum, removeNum, clickedAway }) {
+function Options({ showOptions, textHandle, addNum, removeNum, clickedAway, clicked }) {
 
 
   const [guests, setGuests] = useState(
@@ -29,8 +29,6 @@ function Options({ showOptions, textHandle, addNum, removeNum, clickedAway }) {
 
   return (
     <ClickAwayListener onClickAway={(e)=>{
-      e.stopPropagation()
-      console.log('ddd');
       // clickedAway();
     }}>
     <Card style={{ padding: '5px 15px', width: '20%', position: 'absolute', display: showOptions ? '' : 'none', zIndex: 10, boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)', borderRadius : 2 }}>
