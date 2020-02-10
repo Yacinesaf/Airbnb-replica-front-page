@@ -40,7 +40,6 @@ function BookingForm() {
     setNumGuests(numGuests-=1)
   };
   const notClicked = () => {
-    console.log(clicked)
     if(clicked) setClicked(false);
   };
 

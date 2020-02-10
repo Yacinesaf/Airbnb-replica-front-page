@@ -29,11 +29,11 @@ function Options({ showOptions, textHandle, addNum, removeNum, clickedAway }) {
 
   return (
     <ClickAwayListener onClickAway={(e)=>{
-      console.log(e);
-      e.preventDefault()
-      clickedAway();
+      e.stopPropagation()
+      console.log('ddd');
+      // clickedAway();
     }}>
-    <Card style={{ padding: '5px 15px', width: '19%', position: 'absolute', display: showOptions ? '' : 'none', zIndex: 10, boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)' }}>
+    <Card style={{ padding: '5px 15px', width: '20%', position: 'absolute', display: showOptions ? '' : 'none', zIndex: 10, boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)', borderRadius : 2 }}>
       {objKeys.map((x, i) => (
         <div key={i} style={{ display: 'flex', margin: '15px 0px' }}>
           <div style={{ flexGrow: 1, alignItems: 'center'}}>
