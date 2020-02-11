@@ -1,15 +1,17 @@
 import 'date-fns';
 import React, { useState } from 'react';
-import { Grid, OutlinedInput , Button, Card, CardContent, Typography } from '@material-ui/core';
+import { Grid, TextField , Button, Card, CardContent, Typography } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Options from './Options';
 
-function BookingForm({clicked, clickEvent, clickedAway}) {
+function BookingForm({clicked, clickEvent, mapboxAutocomplete}) {
 
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState();
   const [text, setText] = useState('Guests');
   let [numGuests, setNumGuests] =useState(null);
 
@@ -51,7 +53,32 @@ function BookingForm({clicked, clickEvent, clickedAway}) {
               <Typography variant='caption' style={{ fontWeight: 600, paddingBottom : 10 }}>
                 WHERE
             </Typography>
-              <OutlinedInput  variant='outlined' placeholder='Anywhere' fullWidth />
+            <Autocomplete
+                  renderInput={params => (
+                    <TextField
+                    onClick={(e)=>{console.log(e.target)}}
+                    placeholder='Anywhere'
+                    onChange={(e) => {
+                      if(e.target.value) {
+                        setIsLoading(true)
+                        console.log(e.target.value)
+                        mapboxAutocomplete(e.target.value).then(response => {
+                        console.log(response)
+                        setOptions(response.features ? response.features.map(x => x.place_name) : [])
+                        setIsLoading(false)
+                        })
+                    } else {
+                      setOptions([])
+                    }
+                    console.log(e.target.textContent)
+                    }} 
+                    {...params}
+                    style={{backgroundColor : 'white', borderRadius : 4}}
+                    variant='outlined' 
+                    fullWidth />
+                  )}
+                  options={options}
+                />
               <div style={{ display: 'flex', padding : '15px 0px' }}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils} >
                   <KeyboardDatePicker
@@ -92,7 +119,7 @@ function BookingForm({clicked, clickEvent, clickedAway}) {
                 </div>
                 {clicked ? <ExpandLessIcon id='less' /> : <ExpandMoreIcon id='more' />}
               </div>
-              <Options clickedAway={clickedAway} clicked={clicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
+              <Options clicked={clicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
             </Grid>
             <Grid item xs={12} style={{paddingTop : 15}}>
               <Button size='large' variant='contained' 

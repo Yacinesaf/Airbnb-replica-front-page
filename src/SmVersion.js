@@ -120,7 +120,7 @@ function SmVersion({ open }) {
         </div>
         <div onClick={() => {
           setClicked(!clicked);
-        }} style={{ border: '0.5px solid rgba(0, 0, 0, 0.39)', borderRadius: 4, MaxWidth: '100%', display: 'flex', padding: '15px', marginBottom: 15 }}>
+        }} style={{ border: '0.5px solid rgba(0, 0, 0, 0.39)', borderRadius: 4, MaxWidth: '100%', display: 'flex', padding: '15px'}}>
           <div style={{ flexGrow: 1 }}>
             <Typography style={{ color: 'rgba(0, 0, 0, 0.39)' }}>
               {text}
@@ -130,7 +130,7 @@ function SmVersion({ open }) {
         </div>
         <Options clickedAway={notClicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
         <Button fullWidth size='large' variant='contained'
-          style={{ fontSize: 12, textTransform: 'none', color: 'white', backgroundColor: '#FF5A5F', padding: '8px 18px', fontWeight: 600 }}>
+          style={{ fontSize: 12, textTransform: 'none', color: 'white', backgroundColor: '#FF5A5F', padding: '8px 18px', fontWeight: 600, marginTop: 15 }}>
           Search
         </Button>
       </Grid>

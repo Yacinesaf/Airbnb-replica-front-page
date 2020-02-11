@@ -11,6 +11,23 @@ import { set } from 'date-fns';
 
 function Main() {
 
+  const mapboxAutocomplete = (str) => {
+    let mapbox_options = {
+      apiKey: 'pk.eyJ1IjoidHN1c2hpIiwiYSI6ImNrNW4yeXR1ZjE2NGszanBsZndhbnVkaGEifQ.I3SHntsPRBpIGUJcrQwZUA',
+      types: 'place',
+      limit: '5'
+    }
+    let url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
+      str + '.json?' + 'access_token=' + mapbox_options.apiKey +
+      '&autocomplete=true&types=' + mapbox_options.types + '&limit=' + mapbox_options.limit;
+
+    return fetch(url).then(res => {
+      return res.json().then(real => {
+        return real
+      })
+    })
+  }
+
   const theme = useTheme();
   const xsOnly = useMediaQuery(theme.breakpoints.only('xs'));
   const [isOpen, setIsOpen] = useState(false);
@@ -26,9 +43,6 @@ function Main() {
 
   const CloseDialog = () => {
     setIsOpen(false);
-  };
-  const clickedAway = () => {
-    if (clicked) setClicked(false);
   };
 
   return (
@@ -50,7 +64,7 @@ function Main() {
         <Grid item xs={12}>
           <Grid container>
             <Grid item xs={12} style={{ paddingTop: 10, marginLeft: 100, marginTop: 30 }}>
-              <BookingForm clicked={clicked} clickEvent={invertClick} clickedAway={clickedAway} />
+              <BookingForm mapboxAutocomplete={mapboxAutocomplete} clicked={clicked} clickEvent={invertClick} />
             </Grid>
           </Grid>
         </Grid>
