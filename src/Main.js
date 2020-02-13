@@ -7,7 +7,6 @@ import DialogDrop from './DialogDrop';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import SmVersion from './SmVersion'
-import { set } from 'date-fns';
 
 function Main() {
 
@@ -18,7 +17,7 @@ function Main() {
       limit: '5'
     }
     let url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
-      str + '.json?' + 'access_token=' + mapbox_options.apiKey +
+      str + '.json?access_token=' + mapbox_options.apiKey +
       '&autocomplete=true&types=' + mapbox_options.types + '&limit=' + mapbox_options.limit;
 
     return fetch(url).then(res => {

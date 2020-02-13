@@ -1,36 +1,36 @@
 import React, { useState } from 'react'
-import { Typography, IconButton, Card, ClickAwayListener } from '@material-ui/core';
+import { Typography, IconButton, Card } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
-function Options({ showOptions, textHandle, addNum, removeNum }) {
+function Options({ showOptions, textHandle, addNum, removeNum, guests, addingGuests, removingGuests }) {
 
   const theme = useTheme();
   const mdOnly = useMediaQuery(theme.breakpoints.only('md'));
   const xsOnly = useMediaQuery(theme.breakpoints.only('xs'));
-  const [guests, setGuests] = useState(
-    {
-      adults: {
-        type: 'Adults',
-        sub: '',
-        guest: 0,
-      },
-      children: {
-        type: 'Children',
-        sub: 'Ages 2-12',
-        guest: 0
-      },
-      infants: {
-        type: 'Infants',
-        sub: 'Under 2',
-        guest: 0,
-      }
-    })
-  let objKeys = Object.keys(guests)
 
+ let objs = guests;
+  let obj = {
+    adults: {
+      type: 'Adults',
+      sub: '',
+      guest: 0,
+    },
+    children: {
+      type: 'Children',
+      sub: 'Ages 2-12',
+      guest: 0
+    },
+    infants: {
+      type: 'Infants',
+      sub: 'Under 2',
+      guest: 0,
+    }
+  }
+  let objKeys = Object.keys(obj)
 
   return (
     <div style={{width: mdOnly ? '64%' : '20%'}}>
@@ -39,35 +39,27 @@ function Options({ showOptions, textHandle, addNum, removeNum }) {
           <div key={i} style={{ display: 'flex', margin: '15px 0px' }}>
             <div style={{ flexGrow: 1, alignItems: 'center' }}>
               <Typography variant='h6'>
-                {guests[x].type}
+                {obj[x].type}
               </Typography>
               <Typography variant='subtitle2'>
-                {guests[x].sub}
+                {obj[x].sub}
               </Typography>
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton disabled={guests[x].guest === 0 ? true : false} onClick={() => {
+              <IconButton disabled={obj[x].guest === 0 ? true : false} onClick={() => {
                 removeNum();
                 textHandle();
-                setGuests((prevState) => {
-                  let copy = JSON.parse(JSON.stringify(prevState))
-                  copy[x].guest -= 1
-                  return copy
-                })
+                removingGuests(x);
               }}>
-                <RemoveCircleOutlineIcon fontSize='large' style={{ color: guests[x].guest === 0 ? '' : '#008489' }} />
+                <RemoveCircleOutlineIcon fontSize='large' style={{ color: obj[x].guest === 0 ? '' : '#008489' }} />
               </IconButton>
               <Typography variant='body2' style={{ padding: '0px 10px' }}>
-                {`${guests[x].guest}+`}
+                {`${obj[x].guest}+`}
               </Typography>
               <IconButton onClick={() => {
                 addNum();
                 textHandle();
-                setGuests((prevState) => {
-                  let copy = JSON.parse(JSON.stringify(prevState))
-                  copy[x].guest += 1
-                  return copy
-                })
+                addingGuests(x);
               }}>
                 <AddCircleOutlineIcon fontSize='large' style={{ color: '#008489' }} />
               </IconButton>
