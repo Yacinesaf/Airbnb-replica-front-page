@@ -128,7 +128,7 @@ function SmVersion({ open }) {
           </div>
           {clicked ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </div>
-        <Options clickedAway={notClicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} />
+        {/*<Options clickedAway={notClicked} showOptions={clicked} textHandle={handleTextChange} addNum={addNumGuests} removeNum={removeNumGuests} /> */}
         <Button fullWidth size='large' variant='contained'
           style={{ fontSize: 12, textTransform: 'none', color: 'white', backgroundColor: '#FF5A5F', padding: '8px 18px', fontWeight: 600, marginTop: 15 }}>
           Search

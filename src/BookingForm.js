@@ -148,6 +148,7 @@ function BookingForm({ clicked, clickEvent, mapboxAutocomplete }) {
                 </div>
                 {clicked ? <ExpandLessIcon id='less' /> : <ExpandMoreIcon id='more' />}
               </div>
+              {clicked? 
               <Options 
               clicked={clicked} 
               showOptions={clicked} 
@@ -158,6 +159,7 @@ function BookingForm({ clicked, clickEvent, mapboxAutocomplete }) {
               removingGuests={removingGuests}
               addingGuests={addingGuests}
               />
+               : null  }
             </Grid>
             <Grid item xs={12} style={{ paddingTop: 15 }}>
               <Button size='large' variant='contained'

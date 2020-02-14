@@ -11,7 +11,7 @@ function Options({ showOptions, textHandle, addNum, removeNum, guests, addingGue
   const theme = useTheme();
   const mdOnly = useMediaQuery(theme.breakpoints.only('md'));
   const xsOnly = useMediaQuery(theme.breakpoints.only('xs'));
-
+console.log(guests)
  let objs = guests;
   let obj = {
     adults: {
@@ -33,8 +33,8 @@ function Options({ showOptions, textHandle, addNum, removeNum, guests, addingGue
   let objKeys = Object.keys(obj)
 
   return (
-    <div style={{width: mdOnly ? '64%' : '20%'}}>
-      <Card style={{ padding: '5px 15px', width: xsOnly ? '84%' : '20%', position: 'absolute', display: showOptions ? '' : 'none', zIndex: 10, boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)', borderRadius: 2 }}>
+    <div >
+      <Card style={{ padding: '5px 15px', width: 308, position: 'absolute', zIndex: 10, boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)', borderRadius: 2 }}>
         {objKeys.map((x, i) => (
           <div key={i} style={{ display: 'flex', margin: '15px 0px' }}>
             <div style={{ flexGrow: 1, alignItems: 'center' }}>
