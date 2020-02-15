@@ -1,6 +1,6 @@
 import 'date-fns';
 import React, { useState } from 'react';
-import { Grid, TextField, Button, Card, CardContent, Typography } from '@material-ui/core';
+import { Grid, TextField, Button, Card, CardContent, Typography, ClickAwayListener } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
@@ -8,19 +8,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Options from './Options';
 
-function BookingForm({ clicked, clickEvent, mapboxAutocomplete }) {
-
+function BookingForm({ mapboxAutocomplete }) {
+  const [clicked, setClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState();
-  const [text, setText] = useState('Guests');
-  let [numGuests, setNumGuests] = useState(null);
-  let [autocompleteValue, setAutocompleteValue] = useState(null);
-
   const [checkout, setCheckout] = useState(new Date());
-  const changeCheckout = date => {
-    setCheckout(date);
-  };
-
+  const [checkin, setCheckin1] = useState(new Date());
+  let [autocompleteValue, setAutocompleteValue] = useState(null);
   let [guests, setGuests] = useState(
     {
       adults: {
@@ -44,34 +38,34 @@ function BookingForm({ clicked, clickEvent, mapboxAutocomplete }) {
     setGuests((prevState) => {
       let copy = JSON.parse(JSON.stringify(prevState));
       copy[element].guest += 1
-    })}
+      return copy
+    })
+  }
   const removingGuests = (element) => {
     setGuests((prevState) => {
       let copy = JSON.parse(JSON.stringify(prevState));
       copy[element].guest -= 1
-    })}
-
-
-  const [checkin, setCheckin1] = useState(new Date());
-  const changeCheckin = date => {
-    setCheckin1(date);
-  };
-
-  const handleTextChange = () => {
-    if (numGuests === 1) {
-      setText(`${numGuests} guest`)
-    } else if (numGuests > 1) {
-      setText(`${numGuests} guests`)
-    } else if (numGuests === 0) {
-      setText('Guests')
-    }
+      return copy
+    })
   }
-  const addNumGuests = () => {
-    setNumGuests(numGuests += 1)
-  };
-  const removeNumGuests = () => {
-    setNumGuests(numGuests -= 1)
-  };
+
+  const clearingGuests =() => {
+    setGuests((prevState) => {
+      let copy = JSON.parse(JSON.stringify(prevState));
+      copy.adults.guest = 0
+      copy.children.guest = 0
+      copy.infants.guest = 0
+      return copy
+    })
+  }
+
+  const changeCheckin = date => { setCheckin1(date) }
+  const changeCheckout = date => { setCheckout(date) };
+
+  const guestsSummary = () => {
+    let sum = guests.adults.guest + guests.children.guest + guests.infants.guest
+    return sum === 0 ? "Guests" : sum === 1 ? "1 guest" : sum + " guests"
+  }
 
   return (
     <div>
@@ -106,6 +100,7 @@ function BookingForm({ clicked, clickEvent, mapboxAutocomplete }) {
                     fullWidth />
                 )}
                 options={options}
+                loading={isLoading}
                 onChange={(event, value) => setAutocompleteValue(value)}
               />
               <div style={{ display: 'flex', padding: '15px 0px' }}>
@@ -140,26 +135,27 @@ function BookingForm({ clicked, clickEvent, mapboxAutocomplete }) {
                     }} />
                 </MuiPickersUtilsProvider>
               </div>
-              <div id='guests' onClick={clickEvent} style={{ border: '0.5px solid rgba(0, 0, 0, 0.39)', borderRadius: 4, MaxWidth: '100%', display: 'flex', padding: '15px' }}>
-                <div style={{ flexGrow: 1 }}>
-                  <Typography id='typo' style={{ color: 'rgba(0, 0, 0, 0.39)' }}>
-                    {text}
-                  </Typography>
+              <ClickAwayListener onClickAway={() => { setClicked(false) }}>
+                <div>
+                  <div id='guests' onClick={() => { setClicked(!clicked) }} style={{ border: '0.5px solid rgba(0, 0, 0, 0.39)', borderRadius: 4, MaxWidth: '100%', display: 'flex', padding: '15px' }}>
+                    <div style={{ flexGrow: 1 }}>
+                      <Typography id='typo' style={{ color: 'rgba(0, 0, 0, 0.39)' }}>
+                        {guestsSummary()}
+                      </Typography>
+                    </div>
+                    {clicked ? <ExpandLessIcon id='expandLess' /> : <ExpandMoreIcon id='expandMore' />}
+                  </div>
+                  {clicked ?
+                    <Options
+                      guests={guests}
+                      removingGuests={removingGuests}
+                      addingGuests={addingGuests}
+                      clearingGuests={clearingGuests}
+                      saveButton={()=> setClicked(false)}
+                    />
+                    : null}
                 </div>
-                {clicked ? <ExpandLessIcon id='less' /> : <ExpandMoreIcon id='more' />}
-              </div>
-              {clicked? 
-              <Options 
-              clicked={clicked} 
-              showOptions={clicked} 
-              textHandle={handleTextChange} 
-              addNum={addNumGuests} 
-              removeNum={removeNumGuests} 
-              guests={guests}
-              removingGuests={removingGuests}
-              addingGuests={addingGuests}
-              />
-               : null  }
+              </ClickAwayListener>
             </Grid>
             <Grid item xs={12} style={{ paddingTop: 15 }}>
               <Button size='large' variant='contained'
@@ -169,9 +165,9 @@ function BookingForm({ clicked, clickEvent, mapboxAutocomplete }) {
                     checkin: `${checkin.getDate()}/${checkin.getMonth() + 1}/${checkin.getFullYear()}`,
                     checkout: `${checkout.getDate()}/${checkout.getMonth() + 1}/${checkout.getFullYear()}`,
                     guests: {
-                      adults: 0,
-                      children: 0,
-                      infants: 0
+                      adults: guests.adults.guest,
+                      children: guests.children.guest,
+                      infants: guests.infants.guest
                     }
                   }
                   console.log(searchObject)

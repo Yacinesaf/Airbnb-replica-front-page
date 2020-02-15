@@ -30,11 +30,6 @@ function Main() {
   const theme = useTheme();
   const xsOnly = useMediaQuery(theme.breakpoints.only('xs'));
   const [isOpen, setIsOpen] = useState(false);
-  const [clicked, setClicked] = useState(false);
-
-  const invertClick = () => {
-    setClicked(!clicked)
-  }
 
   const OpenDialog = () => {
     setIsOpen(true);
@@ -45,13 +40,7 @@ function Main() {
   };
 
   return (
-    <div onClick={(e) => {
-      if ((e.target.id === 'guests' || e.target.id === 'less' || e.target.id === 'more' || e.target.id === 'typo') && !clicked) {
-        setClicked(true)
-      } else {
-        setClicked(false)
-      }
-    }}>
+    <div>
       <Grid container alignContent='flex-start'
         style={{ backgroundImage: `url(${img})`, backgroundPosition: 'center', backgroundSize: 'cover', height: '100vh', width: '100%', display: xsOnly ? 'none' : '' }}>
         <Grid item xs={12} style={{ maxHeight: 84 }}>
@@ -63,7 +52,7 @@ function Main() {
         <Grid item xs={12}>
           <Grid container>
             <Grid item xs={12} style={{ paddingTop: 10, marginLeft: 100, marginTop: 30 }}>
-              <BookingForm mapboxAutocomplete={mapboxAutocomplete} clicked={clicked} clickEvent={invertClick} />
+              <BookingForm mapboxAutocomplete={mapboxAutocomplete} />
             </Grid>
           </Grid>
         </Grid>
@@ -80,7 +69,7 @@ function Main() {
           </Grid>
         </Grid>
       </Grid>
-      <SmVersion open={OpenDialog} />
+      <SmVersion open={OpenDialog} mapboxAutocomplete={mapboxAutocomplete}/>
     </div>
   );
 }
